@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Send Flex Message</title>
+  <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Send Flex Message via LIFF</h1>
+  <button id="sendFlexBtn">Send Flex Message</button>
+
+  <script>
+    // เริ่มต้น LIFF
+    async function initLiff() {
+      try {
+        await liff.init({ liffId: '2006477604-jMelQvKw' }); // ใส่ LIFF ID ที่นี่
+        console.log('LIFF initialized');
+      } catch (error) {
+        console.error('LIFF initialization failed:', error);
+      }
+    }
+
+    // Flex Message Template
+    const flexMessage = {
+      type: 'flex',
+      altText: 'This is a Flex Message',
+      contents: {
+        type: 'bubble',
+        body: {
+          type: 'box',
+          layout: 'vertical',
+          contents: [
+            {
+              type: 'text',
+              text: 'Hello, World!',
+              weight: 'bold',
+              size: 'lg'
+            },
+            {
+              type: 'text',
+              text: 'This is a Flex Message example.',
+              wrap: true,
+              margin: 'md'
+            }
+          ]
+        }
+      }
+    };
+
+    // ฟังก์ชันส่งข้อความ
+    async function sendFlexMessage() {
+      try {
+        await liff.sendMessages([flexMessage]); // ส่ง Flex Message
+        alert('Message sent successfully!');
+      } catch (error) {
+        console.error('Error sending message:', error);
+        alert('Failed to send message');
+      }
+    }
+
+    // ผูกปุ่มกับฟังก์ชันส่งข้อความ
+    document.getElementById('sendFlexBtn').addEventListener('click', () => {
+      sendFlexMessage();
+    });
+
+    // เรียกใช้ LIFF ตอนโหลดหน้าเว็บ
+    initLiff();
+  </script>
+</body>
+</html>
